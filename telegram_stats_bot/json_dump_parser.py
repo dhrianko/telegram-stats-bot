@@ -104,7 +104,7 @@ def convert_messages(
                     message.from_id[4:]
                 )  # remove 'user' from id
             print(message)
-            if pd.notnull(message.forward_from):
+            if pd.notnull(message.forwarded_from):
                 try:
                     message_dict["forward_from"] = int(
                         message.from_id[4:]
