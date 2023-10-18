@@ -97,14 +97,14 @@ def convert_messages(
         }
         user_event_dict = {}
         if message.type == "message":
-            if pd.notnull(message.from_id):
+            if "from_id" in message:
                 if not message.from_id.startswith("user"):
                     continue
                 message_dict["from_user"] = int(
                     message.from_id[4:]
                 )  # remove 'user' from id
 
-            if pd.notnull(message.forwarded_from):
+            if "forwarded_from" in message:
                 try:
                     message_dict["forward_from"] = int(
                         message.from_id[4:]
@@ -112,14 +112,14 @@ def convert_messages(
                 except ValueError:
                     pass
 
-            if pd.notnull(message.reply_to_message_id):
+            if "reply_to_message_id" in message:
                 message_dict["reply_to_message"] = int(message.reply_to_message_id)
 
-            if pd.notnull(message.photo):
+            if "photo" in message:
                 message_dict["type"] = "photo"
                 if message.text != "":
                     message_dict["caption"] = text_list_parser(message.text)
-            elif pd.notnull(message.media_type):
+            elif "media_type" in message:
                 if message.text != "":
                     message_dict["caption"] = text_list_parser(message.text)
                 message_dict["type"] = media_dict[message.media_type]
@@ -128,11 +128,11 @@ def convert_messages(
             elif message.text != "":
                 message_dict["type"] = "text"
                 message_dict["text"] = text_list_parser(message.text)
-            elif pd.notnull(message.poll):
+            elif "poll" in message:
                 message_dict["type"] = "poll"
 
         elif message.type == "service":
-            if pd.notnull(message.actor_id):
+            if "actor_id" in message:
                 if message.actor_id.startswith("user"):
                     message_dict["from_user"] = int(message.actor_id[4:])
 
