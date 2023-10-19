@@ -125,15 +125,15 @@ class StatsRunner(object):
         for uid in user_dict:
             username, display_name = user_dict[uid]
             sql_dict = {'uid': uid, 'username': username, 'display_name': display_name}
-            query = """
+            query = f"""
             UPDATE user_names
-            SET username = %(username)s
-            WHERE user_id = %(uid)s AND username IS DISTINCT FROM %(username)s;
+            SET username = {sql_dict["username"]}
+            WHERE user_id = {sql_dict["uid"]} AND username IS DISTINCT FROM {sql_dict["username"]};
             """
             if display_name:
-                query += """\n
+                query += f"""\n
                          INSERT INTO user_names(user_id, date, username, display_name)
-                             VALUES (%(uid)s, current_timestamp, %(username)s, %(display_name)s);
+                             VALUES ({sql_dict["uid"]}, current_timestamp, {sql_dict["username"]}, {sql_dict["display_name"]});
                          """
 
             with self.engine.connect() as con:
