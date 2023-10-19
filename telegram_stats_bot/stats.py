@@ -34,7 +34,7 @@ import numpy as np
 from matplotlib.figure import Figure
 from matplotlib.dates import date2num
 from sqlalchemy.engine import Engine
-from sqlalchemy import select, func
+from sqlalchemy import select, func, text
 from sqlalchemy.dialects import postgresql
 
 from .utils import escape_markdown, TsStat, random_quote
@@ -95,7 +95,7 @@ class StatsRunner(object):
     def get_message_user_ids(self) -> List[int]:
         """Returns list of unique user ids from messages in database."""
         with self.engine.connect() as con:
-            result = con.execute("SELECT DISTINCT from_user FROM messages_utc;")
+            result = con.execute(text("SELECT DISTINCT from_user FROM messages_utc;"))
         return [user for user, in result.fetchall()]
 
     def get_db_users(self) -> Dict[int, Tuple[str, str]]:
@@ -112,7 +112,7 @@ class StatsRunner(object):
         """
 
         with self.engine.connect() as con:
-            result = con.execute(query)
+            result = con.execute(text(query))
         result = result.fetchall()
 
         return {user_id: (username, name) for user_id, username, name in result}
