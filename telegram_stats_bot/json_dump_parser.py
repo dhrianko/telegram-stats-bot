@@ -97,14 +97,14 @@ def convert_messages(
         }
         user_event_dict = {}
         if message.type == "message":
-            if "from_id" in message:
+            if getattr(message, "from_id", None):
                 if not message.from_id.startswith("user"):
                     continue
                 message_dict["from_user"] = int(
                     message.from_id[4:]
                 )  # remove 'user' from id
 
-            if "forwarded_from" in message:
+            if getattr(message, "forwarded_from", None):
                 try:
                     message_dict["forward_from"] = int(
                         message.from_id[4:]
@@ -112,14 +112,14 @@ def convert_messages(
                 except ValueError:
                     pass
 
-            if "reply_to_message_id" in message:
+            if getattr(message, "reply_to_message_id", None):
                 message_dict["reply_to_message"] = int(message.reply_to_message_id)
 
-            if "photo" in message:
+            if getattr(message, "photo", None):
                 message_dict["type"] = "photo"
                 if message.text != "":
                     message_dict["caption"] = text_list_parser(message.text)
-            elif "media_type" in message:
+            elif getattr(message, "media_type", None):
                 if message.text != "":
                     message_dict["caption"] = text_list_parser(message.text)
                 message_dict["type"] = media_dict[message.media_type]
@@ -128,11 +128,11 @@ def convert_messages(
             elif message.text != "":
                 message_dict["type"] = "text"
                 message_dict["text"] = text_list_parser(message.text)
-            elif "poll" in message:
+            elif getattr(message, "poll", None):
                 message_dict["type"] = "poll"
 
         elif message.type == "service":
-            if "actor_id" in message:
+            if getattr(message, "actor_id", None):
                 if message.actor_id.startswith("user"):
                     message_dict["from_user"] = int(message.actor_id[4:])
 
