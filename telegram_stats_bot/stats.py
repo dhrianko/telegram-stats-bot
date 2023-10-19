@@ -137,7 +137,7 @@ class StatsRunner(object):
                          """
 
             with self.engine.connect() as con:
-                con.execute(query, sql_dict)
+                con.execute(text(query), sql_dict)
 
     def get_chat_counts(self, n: int = 20, lquery: str = None, mtype: str = None, start: str = None, end: str = None) \
             -> Tuple[Union[str, None], Union[None, BytesIO]]:
@@ -937,7 +937,7 @@ class StatsRunner(object):
             sql_dict['other'] = other
 
             with self.engine.connect() as con:
-                result = con.execute(query, sql_dict)
+                result = con.execute(text(query), sql_dict)
             output: Tuple[timedelta, int] = result.fetchall()[0]
 
             return output
@@ -1116,7 +1116,7 @@ class StatsRunner(object):
                 """
 
         with self.engine.connect() as con:
-            result = con.execute(query, sql_dict)
+            result = con.execute(text(query), sql_dict)
         try:
             date, from_user, text = result.fetchall()[0]
         except IndexError:
