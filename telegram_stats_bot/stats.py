@@ -127,8 +127,8 @@ class StatsRunner(object):
             # sql_dict = {'uid': uid, 'username': username, 'display_name': display_name}
             query = """
             UPDATE user_names
-            SET username = %s
-            WHERE user_id = %s AND username IS DISTINCT FROM %s;
+            SET username = '%s'
+            WHERE user_id = %s AND username IS DISTINCT FROM '%s';
             """
             values = (username, uid, username)
             with self.engine.connect() as con:
