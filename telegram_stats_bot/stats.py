@@ -131,15 +131,16 @@ class StatsRunner(object):
             WHERE user_id = %s AND username IS DISTINCT FROM %s;
             """
             values = (username, uid, username)
-            if display_name:
-                query += """\n
-                         INSERT INTO user_names(user_id, date, username, display_name)
-                             VALUES (%s, current_timestamp, %s, %s);
-                         """
-                values = (username, uid, username, uid, username, display_name)
             with self.engine.connect() as con:
-                print(values)
-                con.execute(text(query), values)
+                con.execute(query, values)
+            if display_name:
+                query = """
+                        INSERT INTO user_names(user_id, date, username, display_name)
+                        VALUES (%s, current_timestamp, %s, %s);
+                        """
+                values = (uid, username, display_name)
+                with self.engine.connect() as con:
+                    con.execute(query, values)
 
     def get_chat_counts(self, n: int = 20, lquery: str = None, mtype: str = None, start: str = None, end: str = None) \
             -> Tuple[Union[str, None], Union[None, BytesIO]]:
