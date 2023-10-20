@@ -138,7 +138,7 @@ class StatsRunner(object):
                          """
                 values = values + [sql_dict["uid"], sql_dict["username"], sql_dict["display_name"]]
             with self.engine.connect() as con:
-                con.execute(text(query), values)
+                con.execute(query, values)
 
     def get_chat_counts(self, n: int = 20, lquery: str = None, mtype: str = None, start: str = None, end: str = None) \
             -> Tuple[Union[str, None], Union[None, BytesIO]]:
