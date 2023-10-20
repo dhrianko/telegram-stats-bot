@@ -219,14 +219,10 @@ if __name__ == '__main__':
     store = PostgresStore(args.postgres_url)
     stats = StatsRunner(store.engine, tz=args.tz)
 
-    if args.admin_id != 0 and args.chat_id != 0:
-        filters = ~Filters.update.edited_message & Filters.user(user_id=args.admin_id) & ~Filters.chat(chat_id=args.chat_id)
-    elif args.admin_id == 0 and args.chat_id != 0:
-        filters = ~Filters.update.edited_message & ~Filters.chat(chat_id=args.chat_id)
-    elif args.admin_id != 0 and args.chat_id == 0:
-        filters = ~Filters.update.edited_message & Filters.user(user_id=args.admin_id)
+    if args.admin_id != 0:
+        filters = ~Filters.update.edited_message & Filters.user(user_id=args.admin_id) & Filters.chat_type.private
     else:
-        filters = ~Filters.update.edited_message
+        filters = ~Filters.update.edited_message & Filters.chat_type.private
 
     stats_handler = CommandHandler('stats', print_stats, filters=filters, run_async=True)
     dispatcher.add_handler(stats_handler)
