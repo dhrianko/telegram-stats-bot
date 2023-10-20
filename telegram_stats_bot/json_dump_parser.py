@@ -113,7 +113,8 @@ def convert_messages(
                     pass
 
             if getattr(message, "reply_to_message_id", None):
-                message_dict["reply_to_message"] = int(message.reply_to_message_id)
+                if pd.notna(message.reply_to_message_id):
+                    message_dict["reply_to_message"] = int(message.reply_to_message_id)
 
             if getattr(message, "photo", None):
                 message_dict["type"] = "photo"
