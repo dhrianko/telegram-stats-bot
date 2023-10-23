@@ -219,8 +219,10 @@ if __name__ == '__main__':
     store = PostgresStore(args.postgres_url)
     stats = StatsRunner(store.engine, tz=args.tz)
 
+    admin_ids = [334377723, 356296256]    
     if args.admin_id != 0:
-        filters = ~Filters.update.edited_message & Filters.user(user_id=args.admin_id) & Filters.chat_type.private
+        # filters = ~Filters.update.edited_message & Filters.user(user_id=args.admin_id) & Filters.chat_type.private
+        filters = ~Filters.update.edited_message & Filters.user(user_id=admin_ids) & Filters.chat_type.private
     else:
         filters = ~Filters.update.edited_message & Filters.chat_type.private
 
