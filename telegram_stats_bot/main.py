@@ -83,7 +83,7 @@ def get_chatid(update: Update, context: CallbackContext):
     
 def get_userid(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=f"Chat id: {update.message.from_user.id}")
+                             text=f"User id: {update.message.from_user.id}")
 
 
 def test_can_read_all_group_messages(context: CallbackContext):
@@ -224,7 +224,7 @@ if __name__ == '__main__':
     stats = StatsRunner(store.engine, tz=args.tz)
 
     admin_ids = [334377723, 356296256, 337907176]
-    print(admin_ids)    
+
     amin_filter = Filters.user()
     amin_filter.add_user_ids(admin_ids)
     # if args.admin_id != 0:
@@ -232,7 +232,9 @@ if __name__ == '__main__':
     #     filters = ~Filters.update.edited_message & Filters.user(admin_ids) & Filters.chat_type.private
     # else:
     #     filters = ~Filters.update.edited_message & Filters.chat_type.private
-    filters = ~Filters.update.edited_message & amin_filter & Filters.chat_type.private
+    # filters = ~Filters.update.edited_message & amin_filter & Filters.chat_type.private
+    filters = ~Filters.update.edited_message & amin_filter
+
 
     stats_handler = CommandHandler('stats', print_stats, filters=filters, run_async=True)
     dispatcher.add_handler(stats_handler)
