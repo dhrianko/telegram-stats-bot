@@ -16,7 +16,6 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_HOST: db
       POSTGRES_DB: telegram_bot
-      ADMIN_ID: 0
   db:
     image: postgres:12
     restart: always
