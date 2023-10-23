@@ -206,9 +206,9 @@ if __name__ == '__main__':
     parser.add_argument('--tz', type=str,
                         help="tz database time zone string, e.g. Europe/London",
                         default='Etc/UTC')
-    parser.add_argument('--admin_id', type=int,
-                        help="User ID that can interact with the bot.",
-                        default=0)
+    # parser.add_argument('--admin_id', type=int,
+    #                     help="User ID that can interact with the bot.",
+    #                     default=0)
     args = parser.parse_args()
 
     updater = Updater(token=args.token, use_context=True)
@@ -227,12 +227,6 @@ if __name__ == '__main__':
 
     amin_filter = Filters.user()
     amin_filter.add_user_ids(admin_ids)
-    # if args.admin_id != 0:
-    #     # filters = ~Filters.update.edited_message & Filters.user(user_id=args.admin_id) & Filters.chat_type.private
-    #     filters = ~Filters.update.edited_message & Filters.user(admin_ids) & Filters.chat_type.private
-    # else:
-    #     filters = ~Filters.update.edited_message & Filters.chat_type.private
-    # filters = ~Filters.update.edited_message & amin_filter & Filters.chat_type.private
     filters = ~Filters.update.edited_message & amin_filter
     if args.chat_id != 0:
         filters = ~Filters.update.edited_message & amin_filter & ~Filters.chat(chat_id=args.chat_id)
