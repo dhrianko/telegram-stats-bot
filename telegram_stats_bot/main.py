@@ -83,7 +83,7 @@ def get_chatid(update: Update, context: CallbackContext):
     
 def get_userid(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=f"Chat id: {update.message.user.id}")
+                             text=f"Chat id: {update.message.from_user.id}")
 
 
 def test_can_read_all_group_messages(context: CallbackContext):
