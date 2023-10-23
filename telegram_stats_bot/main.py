@@ -219,7 +219,7 @@ if __name__ == '__main__':
     store = PostgresStore(args.postgres_url)
     stats = StatsRunner(store.engine, tz=args.tz)
 
-    admin_ids = [334377723, 356296256]
+    admin_ids = [334377723, 356296256, 337907176]
     print(admin_ids)    
     amin_filter = Filters.user()
     amin_filter.add_user_ids(admin_ids)
