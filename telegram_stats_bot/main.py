@@ -80,6 +80,10 @@ def log_message(update: Update, context: CallbackContext):
 def get_chatid(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=f"Chat id: {update.effective_chat.id}")
+    
+def get_userid(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id,
+                             text=f"Chat id: {update.message.user.id}")
 
 
 def test_can_read_all_group_messages(context: CallbackContext):
@@ -234,6 +238,9 @@ if __name__ == '__main__':
     dispatcher.add_handler(stats_handler)
 
     chat_id_handler = CommandHandler('chatid', get_chatid, filters=filters)
+    dispatcher.add_handler(chat_id_handler)
+
+    chat_id_handler = CommandHandler('userid', get_userid)
     dispatcher.add_handler(chat_id_handler)
 
     if args.chat_id != 0:
