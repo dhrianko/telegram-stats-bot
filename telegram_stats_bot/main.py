@@ -232,8 +232,8 @@ if __name__ == '__main__':
     #     filters = ~Filters.update.edited_message & Filters.user(admin_ids) & Filters.chat_type.private
     # else:
     #     filters = ~Filters.update.edited_message & Filters.chat_type.private
-    # filters = ~Filters.update.edited_message & amin_filter & Filters.chat_type.private
-    filters = ~Filters.update.edited_message & amin_filter
+    filters = ~Filters.update.edited_message & amin_filter & Filters.chat_type.private
+    # filters = ~Filters.update.edited_message & amin_filter
 
 
     stats_handler = CommandHandler('stats', print_stats, filters=filters, run_async=True)
