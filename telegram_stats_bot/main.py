@@ -234,6 +234,8 @@ if __name__ == '__main__':
     #     filters = ~Filters.update.edited_message & Filters.chat_type.private
     # filters = ~Filters.update.edited_message & amin_filter & Filters.chat_type.private
     filters = ~Filters.update.edited_message & amin_filter
+    if args.chat_id != 0:
+        filters = ~Filters.update.edited_message & amin_filter & ~Filters.chat(chat_d=args.chat_id)
 
 
     stats_handler = CommandHandler('stats', print_stats, filters=filters, run_async=True)
@@ -242,7 +244,7 @@ if __name__ == '__main__':
     chat_id_handler = CommandHandler('chatid', get_chatid, filters=filters)
     dispatcher.add_handler(chat_id_handler)
 
-    chat_id_handler = CommandHandler('userid', get_userid)
+    chat_id_handler = CommandHandler('userid', get_userid, filters=filters)
     dispatcher.add_handler(chat_id_handler)
 
     if args.chat_id != 0:
