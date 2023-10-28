@@ -124,8 +124,8 @@ def update_usernames(context: CallbackContext):  # context.job.context contains 
 
 
 def print_stats(update: Update, context: CallbackContext):
-    if update.effective_user.id not in stats.users:
-        return
+    # if update.effective_user.id not in stats.users:
+    #     return
 
     stats_parser = get_parser(stats)
     image = None
